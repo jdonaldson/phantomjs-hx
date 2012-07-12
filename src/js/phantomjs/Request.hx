@@ -1,5 +1,5 @@
-
-typedef Request={
+package js.phantomjs;
+extern class Request{
     /**
       defines the request method (GET, POST, ...)
      **/

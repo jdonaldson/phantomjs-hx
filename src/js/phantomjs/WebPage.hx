@@ -1,91 +1,56 @@
-package js.phantom; 
+package js.phantomjs;
 
 /**
   WebPage object encapsulates a web page. It is usually instantiated using the
   new keyword. The properties, functions, and callbacks of the WebPage object
   are described in the following sections.
  **/
-@:native("WebPage")
+@:native("require('webpage')")
 extern class WebPage {
+    /**
+      Creates a new WebPage using the require module.
+     **/
+    public static function create():WebPage;
+
     /**
       This property defines the rectangular area of the web page to be
       rasterized when render() is invoked. If no clipping rectangle is set,
       render() will process the entire web page.  Example: page.clipRect = {
-      top: 14, left: 3, width: 400, height: 300 } 
-     **/ 
-    public var clipRect:{top:Float, left:Float, width:Float, right:Float}; 
+      top: 14, left: 3, width: 400, height: 300 }
+     **/
+    public var clipRect:{top:Float, left:Float, width:Float, right:Float};
 
     /**
       This property stores the content of the web page, enclosed in HTML/XML
       element. Setting the property will effectively reload the web page with
-      the new content.  
-     **/ 
-    public var content:String; 
+      the new content.
+     **/
+    public var content:String;
 
     /**
       This property stores the path which is used by injectJs function to
       resolve the script name. Initially it is set to the location of the
-      script invoked by PhantomJS.  
+      script invoked by PhantomJS.
      **/
-    public var libraryPath:String; 
+    public var libraryPath:String;
 
     /**
-      defines whether to execute the script in the page or not (default to
-      true)
-     **/
-    public var javascriptEnabled:Bool; 
-
-    /**
-      defines whether to load the inlined images or not
-     **/
-    public var loadImages:Bool;
-
-
-    /**
-      defines whether local resource (e.g. from file) can access remote URLs or
-      not (default to false) 
-     **/
-    public var localToRemoteUrlAccessEnabled:Bool; 
-
-    /**
-       defines the user agent sent to server when the web page requests
-       resources.
-     **/
-    public var userAgent:String; 
-
-    /**
-      sets the user name used for HTTP authentication
-     **/
-    public var userName:String;  
-
-    /**
-       sets the password used for HTTP authentication
+      This property stores various settings of the web page
      **/
     
-    public var password:String; 
-
-    /**
-       defines whether load requests should be monitored for cross-site
-       scripting attempts (default to false)
-     **/
-    public var XSSAuditingEnabled:Bool; 
-
-    /**
-       defines whether web security should be enabled or not (default to true)
-     **/
-    public var webSecurityEnabled:Bool;
+    public var settings:WebPageSettings;
 
     /**
       This property sets the size of the viewport for the layout process. It is
       useful to set the preferred initial size before loading the page, e.g. to
       choose between landscape vs portrait.  Because PhantomJS is headless
       (nothing is shown), !viewportSize effectively simulates the size of the
-      window like in a traditional browser.  
+      window like in a traditional browser.
       Example: page.viewportSize = { width: 480, height: 800 }
      **/
-    public var viewPortSize:{width:Float, height:Float}; 
-    
-    
+    public var viewPortSize:{width:Float, height:Float};
+
+
     /**
       Evaluates the given function in the context of the web page. The
       execution is sandboxed, the web page has no access to the phantom object
@@ -97,8 +62,8 @@ extern class WebPage {
           }));
           ))
      **/
-    public function evaluate(function:Dynamic):Void;
-    
+    public function evaluate(f:Dynamic):Void;
+
     /**
       Includes external script from the specified URL (usually remote
       location) and executes the callback upon completion.
@@ -114,7 +79,7 @@ extern class WebPage {
       Injects external script code from the specified file. If the file can not be
       found in the current directory, libraryPath is used for additional look up.
       This function returns true if injection is successful, otherwise it returns
-      false. 
+      false.
      **/
     public function injectJs(filename:String):Void;
 
@@ -165,7 +130,7 @@ extern class WebPage {
       web page as if it comes as part of user interaction.
      **/
     public function sendEvent(type:String, ?mouseposx:Float, ?mouseposy:Float):Void;
-    
+
     /**
       Uploads the specified file to the form element associated with the
       selector.  This function is used to automate the upload of a file which
@@ -241,12 +206,10 @@ extern class WebPage {
     /**
       This callback is invoked when the a resource requested by the page is
       received. The only argument to the callback is the request object.
-      
+
       If the resource is large and sent by the server in multiple chunks,
       onResourceReceived will be invoked for every chunk received by PhantomJS.
-     **/ 
+     **/
     public var onResourceReceived:Request->Void;
 
-    @:native("require('webpage')")
-    public static function create():WebPage;
 }

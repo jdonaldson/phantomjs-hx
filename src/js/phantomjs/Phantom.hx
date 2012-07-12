@@ -1,7 +1,7 @@
-package js.phantom;
+package js.phantomjs;
 
 @:native("phantom")
-extern class PhantomJs {
+extern class Phantom {
     /**
       This read-only property is an array of the arguments passed to
       the script. Deprecated: Please use system.args from the System module.
@@ -31,7 +31,7 @@ extern class PhantomJs {
       Exits the program with the specified return value. If no return value is
       specified, it is set to 0.
      **/
-    public static function exit(returnValue:Dynamic);
+    public static function exit(?returnValue:Int):Void;
 
     /**
       Injects external script code from the specified file. If the file can

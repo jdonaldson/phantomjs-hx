@@ -1,4 +1,4 @@
-
+package js.phantomjs;
 extern class Response {
     /**
        stores all HTTP headers as key-value pair (set these BEFORE calling write for the first time)
