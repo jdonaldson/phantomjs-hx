@@ -1,13 +1,38 @@
 package js.phantom;
 
+/**
+  A stream object returned from the open() function
+ **/
 class StreamObject{
-    //A stream object returned from the open() function has the following functions:
 
-    public function read():String; // returns the content of the stream.
-    public function write(data):Void; // writes the string to the stream.
-    public function readLine():String; // reads only a line from the stream and return it.
-    public function writeLine(data):Void; // writes the data as a line to the stream.
-    public function flush():Void; // flushes all pending input output.
-    public function close():Void; // completes the stream operation.
+    /**
+      returns the content of the stream.
+     **/
+    public function read():String;
 
-r}
+    /**
+      writes the string to the stream.
+     **/
+    public function write(data):Void;
+
+    /**
+      reads only a line from the stream and return it.
+     **/
+    public function readLine():String;
+
+    /**
+      writes the data as a line to the stream.
+     **/
+    public function writeLine(data):Void;
+
+    /**
+      flushes all pending input output.
+     **/
+    public function flush():Void;
+
+    /**
+      completes the stream operation.
+     **/
+    public function close():Void;
+
+}
