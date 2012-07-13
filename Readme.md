@@ -13,9 +13,13 @@ A few caveats:
    mappings, so haxe.Log.trace, js.Lib.document, etc. will not be available.
    See more information on the [phantomjs
    api](http://code.google.com/p/phantomjs/wiki/Interface#evaluate(function\)).
-   Note that the function cannot return closures or functions, only simple
-   objects.  However, the return is fully typed.
+   Note that the function cannot return closures or functions, only
+   simple objects.  However, the return is fully typed.
 2. I'm including some deprecated features, including the [arg array for
    phantom](http://code.google.com/p/phantomjs/wiki/Interface#args_(array\)).
    In future phantomjs versions this may not be present.  Use System.args
    instead.
+3. The require("webpage").create() syntax is not used to create phantomjs
+   objects (e.g. WebPages).  Instead, you can simply use  the "create" method
+   for the class. (e.g. WebPage.create()), which is an alias for the
+   require("webpage") method.
