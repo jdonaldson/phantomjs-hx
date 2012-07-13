@@ -18,7 +18,7 @@ extern class WebPage {
       render() will process the entire web page.  Example: page.clipRect = {
       top: 14, left: 3, width: 400, height: 300 }
      **/
-    public var clipRect:{top:Float, left:Float, width:Float, right:Float};
+    public var clipRect:{top:Float, left:Float, width:Float, height:Float};
 
     /**
       This property stores the content of the web page, enclosed in HTML/XML
@@ -56,13 +56,18 @@ extern class WebPage {
       execution is sandboxed, the web page has no access to the phantom object
       and it can't probe its own setting. Any return value must be of a simple
       object, i.e. no function or closure.
+
+      HAXE NOTE: Keep in mind that the evaluate function does not have any 
+      of the haxe Std lib present.  You'll need to use basic js in the 
+      function.
+
       Example:
       console.log('Page title is ' + page.evaluate(function () {
-          return document.title;
-          }));
+                return document.title;
+            }));
           ))
      **/
-    public function evaluate(f:Dynamic):Void;
+    public function evaluate<T>(f:Void->T):T;
 
     /**
       Includes external script from the specified URL (usually remote
@@ -159,7 +164,9 @@ extern class WebPage {
 
       page.onConsoleMessage = function (msg) { console.log(msg); };
      **/
-    public var onConsoleMessage:String->Int->String->Void;
+    @:overload(function(msg:String, line:Int):Void{})
+    @:overload(function(msg:String, line:Int, source_id:String):Void{})
+    public dynamic function onConsoleMessage(msg:String):Void;
 
     /**
       This callback is invoked when there is a JavaScript execution error. It
