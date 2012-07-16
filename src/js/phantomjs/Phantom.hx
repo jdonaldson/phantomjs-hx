@@ -1,5 +1,9 @@
 package js.phantomjs;
 
+/**
+  The interface with various PhantomJS functionalities is carried out using a
+  new host object named phantom, added as a child of the `window` object.
+ **/
 @:native("phantom")
 extern class Phantom {
     /**

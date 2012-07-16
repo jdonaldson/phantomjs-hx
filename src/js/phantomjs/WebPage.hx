@@ -35,9 +35,14 @@ extern class WebPage {
     public var libraryPath:String;
 
     /**
+      This property defines whether navigation away from the page is permitted
+      or not. If it is set to true, then the page is locked to the current URL.
+     **/
+    public var navigationLocked:Bool;
+
+    /**
       This property stores various settings of the web page
      **/
-    
     public var settings:WebPageSettings;
 
     /**
@@ -50,24 +55,40 @@ extern class WebPage {
      **/
     public var viewPortSize:{width:Float, height:Float};
 
+    /**
+      This property specifies the scaling factor for the render and
+      renderBase64 functions. The default is 1, i.e. 100% zoom.
+     **/
+    public var zoomFactor:Float;
 
     /**
       Evaluates the given function in the context of the web page. The
       execution is sandboxed, the web page has no access to the phantom object
-      and it can't probe its own setting. Any return value must be of a simple
-      object, i.e. no function or closure.
-
-      HAXE NOTE: Keep in mind that the evaluate function does not have any 
-      of the haxe Std lib present.  You'll need to use basic js in the 
-      function.
+      and it can't probe its own setting.
 
       Example:
       console.log('Page title is ' + page.evaluate(function () {
                 return document.title;
             }));
           ))
+
+      Note: The arguments and the return value to the evaluate function must be a
+      simple primitive object. It can be a closure, a function, a DOM node, etc.
+      The rule of thumb: if it can be serialized via JSON, then it is fine.
+
      **/
-    public function evaluate<T>(f:Void->T):T;
+    @:overload(function<T>(f:String):T{})
+    @:overload(function<T>(f:Void->T):T{})
+    public function evaluate<T>(f:Dynamic->T):T;
+
+
+    /**
+     Evaluates the given function in the context of the web page without
+     blocking the current execution.  The function returns immediately and
+     there is no return value. This is useful to run some script
+     asynchronously.
+     **/
+    public function evaluateAsync(f:Dynamic):Void;
 
     /**
       Includes external script from the specified URL (usually remote
@@ -122,6 +143,13 @@ extern class WebPage {
     public function render(fileName:String):Void;
 
     /**
+      Renders the web page to an image buffer and returns the result as a
+      base64-encoded string representation of that image.  Supported formats
+      are PNG, GIF, and JPEG.
+    **/
+    public function renderBase64(format:String):Void;
+
+    /**
       Sends an event to the web page.
 
       The first argument is the event type. Supported type are mouseup,
@@ -154,6 +182,13 @@ extern class WebPage {
       argument passed to the callback is the string for the message.
      **/
     public var onAlert:String->Void;
+
+    /**
+      This callback is invoked when there is a JavaScript confirm. The only
+      argument passed to the callback is the string for the message. The return
+      value of the callback handler can be either true or false.
+     **/
+    public var onConfirm:String->Bool;
 
     /**
       This callback is invoked when there is a JavaScript console. The callback
@@ -205,6 +240,14 @@ extern class WebPage {
     public var onLoadStarted:Void->Void;
 
     /**
+      This callback is invoked when there is a JavaScript prompt. The arguments
+      passed to the callback are the string for the message and the default
+      value for the prompt answer. The return value of the callback handler
+      should be a string.
+     **/
+    public var onPrompt:String->Dynamic->String;
+
+    /**
       This callback is invoked when the page requests a resource. The only
       argument to the callback is the request object.
      **/
@@ -218,5 +261,11 @@ extern class WebPage {
       onResourceReceived will be invoked for every chunk received by PhantomJS.
      **/
     public var onResourceReceived:Request->Void;
+
+    /**
+      This callback is invoked when the URL changes, e.g. as it navigates away
+      from the current URL.
+     **/
+    public var onUrlChanged:Void->Void;
 
 }
