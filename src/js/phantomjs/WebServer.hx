@@ -1,5 +1,6 @@
-import js.phantom.Request;
-import js.phantom.Response;
+package js.phantomjs;
+import js.phantomjs.Request;
+import js.phantomjs.Response;
 
 /**
   Starting from version 1.4, PhantomJS script can start a web server. The
@@ -14,7 +15,7 @@ import js.phantom.Response;
   next versions.
  **/
 @:native("require('webserver')")
-class WebServer {
+extern class WebServer {
     public static function create():WebServer;
     public function listen(port:Int, cb:Request->Response->Void):Void;
 }

@@ -3,7 +3,7 @@ package js.phantomjs;
 /**
   A stream object returned from the open() function
  **/
-class StreamObject{
+extern class StreamObject{
 
     /**
       returns the content of the stream.
