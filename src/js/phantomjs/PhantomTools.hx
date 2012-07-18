@@ -18,7 +18,7 @@ class PhantomTools {
       Simple routine which detects if it is being evaluated in webkit.
       Note: The page must first be injected with injectThis.
      **/
-    public static function inPhantom(){
+    inline public static function inPhantom(){
         return untyped window.hasOwnProperty('phantom');
     }
 }
