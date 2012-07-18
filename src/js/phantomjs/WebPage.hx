@@ -77,9 +77,9 @@ extern class WebPage {
       The rule of thumb: if it can be serialized via JSON, then it is fine.
 
      **/
-    @:overload(function<T>(f:String):T{})
-    @:overload(function<T>(f:Void->T):T{})
-    public function evaluate<T>(f:Dynamic->T):T;
+    @:overload(function(f:String, ?arg:Dynamic):Dynamic{})
+    @:overload(function<T>(f:Void->T, ?arg:Dynamic):T{})
+    public function evaluate<A,B>(f:A->B, ?arg:A):B;
 
 
     /**
