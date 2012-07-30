@@ -18,12 +18,12 @@ extern class Request{
     /**
       stores all HTTP headers as key-value pair
      **/
-    public var headers:Hash<String>; 
+    public var headers:Dynamic<String>;
 
     /**
-      request body (only POST and PUT method) 
+      request body (only POST and PUT method)
      **/
-    public var post:String; 
+    public var post:String;
 
     /**
       if Content-Type is set to

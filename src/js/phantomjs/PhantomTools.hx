@@ -8,10 +8,11 @@ import js.phantomjs.WebPage;
 class PhantomTools {
 
     /**
-      injects the currently executing phantomjs script into a webkit page.
+      Injects the currently executing phantomjs script into a webkit page.
+      Returns the return value from page.injectJs.
      **/
     public static function injectThis(page:WebPage){
-        page.injectJs(System.args[0]);
+        return page.injectJs(System.args[0]);
     }
 
     /**

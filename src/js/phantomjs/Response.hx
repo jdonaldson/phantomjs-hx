@@ -3,7 +3,7 @@ extern class Response {
     /**
        stores all HTTP headers as key-value pair (set these BEFORE calling write for the first time)
      **/
-    public var headers:Hash<String>;
+    public var headers:Dynamic<String>;
 
     /**
        sets the returned status code
