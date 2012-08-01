@@ -1,9 +1,6 @@
-rm -r haxelib
+rm -r haxelib/js
 rm phantomjs.zip
-mkdir -p haxelib
-cp haxelib.xml haxelib
 cp -r src/js haxelib
-cd src
-haxe -js x --no-output -xml ../haxelib/haxedoc.xml `ls js/phantomjs/*.hx`
-cd -
+
+haxe -cp src -js x --no-output -xml haxelib/haxedoc.xml `cd src && ls js/phantomjs/*.hx`
 zip -r phantomjs.zip haxelib -x "*.DS_Store"
