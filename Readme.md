@@ -45,7 +45,7 @@ Warning
 Keep in mind that PhantomTools.injectThis() loads phantomjs application code
 into a sandboxed page instance, which may be running a page with unknown third
 party code. Be cautious when using it, since it could potentially leak
-passwords, credentials, etc. that are contained in the phantomjs application
+passwords, credentials, etc. that are contained in the phantomjs script
 source.
 
 
