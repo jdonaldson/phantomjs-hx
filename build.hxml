@@ -1,0 +1,16 @@
+-cp src
+js.phantomjs.Phantom
+js.phantomjs.FileSystem
+js.phantomjs.Phantom
+js.phantomjs.PhantomTools
+js.phantomjs.Request
+js.phantomjs.Response
+js.phantomjs.StreamObject
+js.phantomjs.System
+js.phantomjs.WebPage
+js.phantomjs.WebPageSettings
+js.phantomjs.WebServer
+-xml haxedoc.xml
+
+--no-output
+-js x
