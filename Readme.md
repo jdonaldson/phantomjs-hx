@@ -15,10 +15,13 @@ See more information on the [phantomjs
 Webpage.evaluate() accepts a callback that executes locally in a new virtual
 browser instance. This page instance is separate from the phantomjs instance,
 so none of the scoped variables are avaialble.  Naturally, this virtual
-instance will not have the Haxe standard lib, such as trace, Hash, etc.
+instance will not have the Haxe standard lib by default, such as trace, Hash,
+etc. The current method of dealing with this is to include a small js file in
+the evaluated page containing the compiled haxe libs.
 
 PhantomTools provides "injectThis" which will inject the current script into
-the page, which will provide all of the haxe libraries for the evaluated page:
+the page, which will provide all of the methods from your phantomjs script 
+in the page you are evaluating.  
 
 ```javascript
 var page = WebPage.create();
@@ -35,6 +38,16 @@ static function main(){
   if (!PhantomTools.inPhantom()) return;
   //[...]
 ```
+
+Warning
+-------
+
+Keep in mind that PhantomTools.injectThis() loads phantomjs application code
+into a sandboxed page instance, which may be running a page with unknown third
+party code. Be cautious when using it, since it could potentially leak
+passwords, credentials, etc. that are contained in the phantomjs application
+source.
+
 
 Note
 ----
