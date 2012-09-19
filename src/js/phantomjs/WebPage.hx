@@ -140,14 +140,14 @@ extern class WebPage {
      Currently the output format is automatically set based on the file
      extension. Supported formats are PNG, JPEG, and PDF.
      **/
-    public function render(fileName:String):Void;
+    public function render(fileName:String):Bool;
 
     /**
       Renders the web page to an image buffer and returns the result as a
       base64-encoded string representation of that image.  Supported formats
       are PNG, GIF, and JPEG.
     **/
-    public function renderBase64(format:String):Void;
+    public function renderBase64(format:String):Bool;
 
     /**
       Sends an event to the web page.

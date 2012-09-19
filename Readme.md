@@ -1,5 +1,4 @@
-phantomjs-hx
-============
+# phantomjs-hx
 
 phantomjs-hx is a [haxe](http://www.haxe.org) extern for
 [phantomjs](http://phantomjs.org/).
@@ -38,9 +37,9 @@ static function main(){
   if (!PhantomTools.inPhantom()) return;
   //[...]
 ```
+## Warnings
 
-Warning
--------
+### injectThis and Sandboxing
 
 Keep in mind that PhantomTools.injectThis() loads phantomjs application code
 into a sandboxed page instance, which may be running a page with unknown third
@@ -48,9 +47,14 @@ party code. Be cautious when using it, since it could potentially leak
 passwords, credentials, etc. that are contained in the phantomjs script
 source.
 
+### injectThis and js.Lib
 
-Note
-----
+Importing js.Lib, or using it anywhere inside of a build that is inejected into
+a page will interfere with the phantomjs error handlers.  It is recommended not
+to use js.Lib in phantomjs code, since most of the functionality is already
+provided through the extern.  
+
+## Note
 The require("webpage").create() syntax is not used to create phantomjs objects
 (e.g. WebPages).  Instead, you can simply use  the "create" method for the
 class. (e.g. WebPage.create()), which conforms to Haxe syntax, and aliases the
