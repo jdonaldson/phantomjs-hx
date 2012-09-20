@@ -107,7 +107,7 @@ extern class WebPage {
       This function returns true if injection is successful, otherwise it returns
       false.
      **/
-    public function injectJs(filename:String):Void;
+    public function injectJs(filename:String):Bool;
 
     /**
       Opens the URL and loads it to the page. Once page is loaded, the optional
