@@ -92,7 +92,7 @@ import js.phantomjs.PhantomTools;
 
 class PhantomTest{
     static function main(){
-        if (!PhantomTools.inPhantom()) return; // exit if not in phantom scope
+        if (PhantomTools.noPhantom()) return; // exit if not in phantom scope
 
         var page = WebPage.create();
         page.open("some_arbitrary_webpage.html", function(status){
