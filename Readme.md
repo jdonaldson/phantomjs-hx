@@ -7,9 +7,9 @@ It contains typedefs and externs for all of the common modules and entities.
 It also contains the PhantomTools class, which enable some Haxe-specific
 functionality.
 
-For now,  PhantomTools lets you more easily work with Webpage.evaluate.
-See more information on the [phantomjs
-   api](http://code.google.com/p/phantomjs/wiki/Interface#evaluate(function\)).
+For now,  PhantomTools includes some utilities that let you more easily work
+with Haxe code in Webpage.evaluate.  See more information on the [phantomjs
+api](http://code.google.com/p/phantomjs/wiki/Interface#evaluate(function\)).
 
 Webpage.evaluate() accepts a callback that executes locally in a new virtual
 browser instance. This page instance is separate from the phantomjs instance,
@@ -39,7 +39,7 @@ static function main(){
 ```
 ## Warnings
 
-### injectThis and Sandboxing
+### injectThis() and Sandboxing
 
 Keep in mind that PhantomTools.injectThis() loads phantomjs application code
 into a sandboxed page instance, which may be running a page with unknown third
@@ -47,12 +47,58 @@ party code. Be cautious when using it, since it could potentially leak
 passwords, credentials, etc. that are contained in the phantomjs script
 source.
 
-### injectThis and js.Lib
+### window.onerror, js.Lib, and PhantomTools.exposeWindowErrors
 
-Importing js.Lib, or using it anywhere inside of a build that is inejected into
-a page will interfere with the phantomjs error handlers.  It is recommended not
-to use js.Lib in phantomjs code, since most of the functionality is already
-provided through the extern.  
+Haxe's default js.Lib will automatically set a window.onerror handler that
+catches all page errors.  This can block error messages from reaching Phantom's
+error handlers.  One way of preventing this from happening is to use
+js.Lib.setErrorHandler(f); where "f" will always return false.  The other way
+is to use PhantomTools.exposeWindowErrors(page) on the relevant Phantom WebPage
+"page".  The PhantomTools method works in all cases.
+
+For instance, here's an example class that shows a typical workflow.
+
+```javascript
+// PhantomTest.hx
+import js.Lib; // for sake of illustration, include js.Lib manually.
+import js.phantomjs.WebPage;
+import js.phantomjs.PhantomTools;
+class PhantomTest{
+    static function main(){
+        if (!PhantomTools.inPhantom()) return; // exit if not in phantom scope
+
+        var page = WebPage.create();
+        page.open("some_arbitrary_webpage.html", function(status){
+                PhantomTools.injectThis(page); // include this script in the opened page
+                PhantomTools.exposeWindowErrors(page); // "unhandle" the default window errors for the page.
+                page.onError = function(x,i) trace("page error: " + x); // handle errors on this page
+                var argument = 'blah blah blah'; // set some text to send to the page
+                var result = page.evaluate(function(argument){
+                    var h = new Hash<String>(); // use some Haxe library methods, gained from injectThis.
+                    Lib.document.innerHTML = argument; // set the document content with the argument
+                    untyped h.invalid_method(); // trigger an error
+                    }, argument); // pass the text to the page
+                }
+                page.render("output.png"); // render the page.
+                PhantomTools.exit(); // exit phantomjs
+    }
+}
+```
+
+```bash
+# build.hxml
+-lib phantomjs-hx
+-main PhantomTest
+-js test.js
+-cmd phantomjs test.js
+```
+
+
+
+With this code, you can use any of the phantomjs haxe methods inside your page, and also ensure
+that js.Lib is not preventing errors from reaching your page error handlers.
+
+
 
 ## Note
 The require("webpage").create() syntax is not used to create phantomjs objects
