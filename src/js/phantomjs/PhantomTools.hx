@@ -1,6 +1,5 @@
 package js.phantomjs;
 import js.phantomjs.WebPage;
-import js.Dom.Window;
 
 /**
   A class providing some useful methods for working with Haxe compiled Phantom
