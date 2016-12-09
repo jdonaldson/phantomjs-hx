@@ -4,7 +4,7 @@
 	"license":"MIT",
 	"tags":["js","extern"],
 	"description":"Haxe externs for phantomjs",
-	"version":"1.6.2",
-	"releasenote":"New release for haxelib 3.0",
+	"version":"1.6.3",
+	"releasenote":"Updated for Haxe 3.4",
 	"contributors":["jdonaldson"]
 }

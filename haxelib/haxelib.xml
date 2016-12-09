@@ -1,7 +1,0 @@
-<project name="phantomjs" url="https://github.com/jdonaldson/phantomjs-hx" license="GPL">
-    <user name="jdonaldson"/>
-    <tag v="js"/>
-    <tag v="extern"/>
-    <description>Haxe externs for phantomjs</description>
-    <version name="1.6-3">Updated for Haxe 3.4</version>
-</project>
