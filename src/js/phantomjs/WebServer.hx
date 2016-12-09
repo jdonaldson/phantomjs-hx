@@ -14,7 +14,7 @@ import js.phantomjs.Response;
   needs, the functionalities and the corresponding API will be expanded in the
   next versions.
  **/
-@:native("require('webserver')")
+@:jsRequire("webserver")
 extern class WebServer {
     public static function create():WebServer;
     public function listen(port:Int, cb:Request->Response->Void):Void;

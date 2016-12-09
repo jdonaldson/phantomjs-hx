@@ -5,7 +5,7 @@ package js.phantomjs;
   new keyword. The properties, functions, and callbacks of the WebPage object
   are described in the following sections.
  **/
-@:native("require('webpage')")
+@:jsRequire('webpage')
 extern class WebPage {
     /**
       Creates a new WebPage using the require module.
@@ -53,7 +53,7 @@ extern class WebPage {
       window like in a traditional browser.
       Example: page.viewportSize = { width: 480, height: 800 }
      **/
-    public var viewPortSize:{width:Float, height:Float};
+    public var viewportSize:{width:Float, height:Float};
 
     /**
       This property specifies the scaling factor for the render and
@@ -121,7 +121,19 @@ extern class WebPage {
       });)
      **/
     public function open(URL:String, ?optional_callback:String->Void):Void;
+	
+    /**
+	  Introduced: PhantomJS 1.7
+	  Close the page and releases the memory heap associated with it. 
+	  Do not use the page instance after calling this.
 
+      Due to some technical limitation, the web page object might not be
+      completely garbage collected. This is often encountered when the same
+      object is used over and over again. Calling this function may stop the
+      increasing heap allocation.
+     */
+    public function close():Void;
+	
     /**
       Releases memory heap associated with this page. Do not use the page
       instance after calling this.
@@ -138,9 +150,22 @@ extern class WebPage {
      Renders the web page to an image buffer and save it as the specified file.
 
      Currently the output format is automatically set based on the file
-     extension. Supported formats are PNG, JPEG, and PDF.
+     extension. 
+	 
+	 Supported formats: PDF, PNG, JPEG, BMP, PPM GIF support depends on the
+	 build of Qt used
+	 
+     Quality:  An integer between 0 and 100.
+     The quality setting only has an effect on jpeg and png formats. With jpeg, 
+	 it sets the quality level as a percentage, in the same way as most image 
+	 editors. (The output file always has 2x2 subsampling.) A level of 0 produces
+	 a very small, very low quality file, and 100 produces a much larger, 
+	 high-quality file. The default level is 75. With png, it sets the
+	 lossless (Deflate) compression level, with 0 producing the smallest files,
+	 and 100 producing the largest. However, the files look identical, and are
+	 always true-colour.
      **/
-    public function render(fileName:String):Bool;
+    public function render(fileName:String, ?options:{format:String, quality:Int}):Bool;
 
     /**
       Renders the web page to an image buffer and returns the result as a

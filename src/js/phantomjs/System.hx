@@ -4,7 +4,7 @@ package js.phantomjs;
   A set of functions to access system-level functionalities is available,
   modelled after CommonJS System proposal.
  **/
-@:native("require('system')")
+@:jsRequire('system')
 extern class System {
     /**
       the name of the platform, the value is always phantomjs.
