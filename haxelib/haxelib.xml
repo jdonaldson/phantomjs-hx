@@ -3,5 +3,5 @@
     <tag v="js"/>
     <tag v="extern"/>
     <description>Haxe externs for phantomjs</description>
-    <version name="1.6-2">New build for Haxe3 and new haxelib</version>
+    <version name="1.6-3">Updated for Haxe 3.4</version>
 </project>
