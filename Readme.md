@@ -9,7 +9,7 @@ functionality.
 
 For now,  PhantomTools includes some utilities that let you more easily work
 with Haxe code in Webpage.evaluate.  See more information on the [phantomjs
-api](http://code.google.com/p/phantomjs/wiki/Interface#evaluate(function)).
+api](http://phantomjs.org/api/).
 
 Webpage.evaluate() accepts a callback that executes locally in a new virtual
 browser instance. This page instance is separate from the phantomjs instance,
