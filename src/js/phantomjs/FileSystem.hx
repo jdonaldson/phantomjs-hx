@@ -4,7 +4,7 @@ package js.phantomjs;
   A set of API functions is available to access files and directories. They are
   modelled after CommonJS Filesystem proposal.
  **/
-@:native("require('fs')")
+@:jsRequire('fs')
 extern class FileSystem {
     //Read-only properties
 
