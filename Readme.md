@@ -9,7 +9,7 @@ functionality.
 
 For now,  PhantomTools includes some utilities that let you more easily work
 with Haxe code in Webpage.evaluate.  See more information on the [phantomjs
-api](http://code.google.com/p/phantomjs/wiki/Interface#evaluate(function\)).
+api](http://code.google.com/p/phantomjs/wiki/Interface#evaluate(function)).
 
 Webpage.evaluate() accepts a callback that executes locally in a new virtual
 browser instance. This page instance is separate from the phantomjs instance,
@@ -23,12 +23,12 @@ PhantomTools provides "injectThis" which will inject the current script into
 the page. This will provide all of the methods from your phantomjs script
 in the page you are evaluating.
 
-```javascript
+```haxe
 var page = WebPage.create();
 PhantomTools.injectThis(page);
 page.evaluate(function(){
-        var h = new Hash<Int>(); // haxe specific methods here.
-    });
+    var h = new Hash<Int>(); // haxe specific methods here.
+});
 ```
 
 This is extremely useful, but still has some significant issues and some
@@ -42,13 +42,13 @@ is not a closure, and should be treated as a completely separate method that
 methods.  You can pass simple objects to the evaluated method;  Anything that
 can be serialized via JSON will work.
 
-```javascript
+```haxe
 var page = WebPage.create();
 PhantomTools.injectThis(page);
 var k = 'a variable in the phantom scope';
 page.evaluate(function(){
-         trace(k); // k is undefined: this function is in a separate page scope.
-    });
+    trace(k); // k is undefined: this function is in a separate page scope.
+});
 ```
 
 ### Preventing Static Main
@@ -58,7 +58,7 @@ try to execute its static main. To prevent this from happening, you can
 check the result from PhantomTools.noPhantom() to avoid running main() in an
 evaluated page:
 
-```javascript
+```haxe
 static function main(){
   if (PhantomTools.noPhantom()) return; // evaluated in a page, exit immediately.
   //[...]
@@ -84,7 +84,7 @@ injectThis().
 
 For instance, here's an example class that shows a typical workflow.
 
-```javascript
+```haxe
 // PhantomTest.hx
 import js.Lib;
 import js.phantomjs.WebPage;
@@ -107,14 +107,14 @@ class PhantomTest{
                     }, argument); // pass the text to the page
                 }
                 page.render("output.png"); // render the page.
-                PhantomTools.exit(); // exit phantomjs
+                Phantom.exit(); // exit phantomjs
     }
 }
 ```
 
 ```bash
 # build.hxml
--lib phantomjs-hx
+-lib phantomjs
 -main PhantomTest
 -js test.js
 -cmd phantomjs test.js
